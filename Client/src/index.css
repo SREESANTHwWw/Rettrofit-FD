@@ -1,0 +1,53 @@
+@import "tailwindcss";
+
+@keyframes opacityanimate {
+
+    0% {opacity: 0%;}
+    40% {opacity: 40%;}
+    60% {opacity: 60%;}
+    100% {opacity: 100%; }
+}
+
+.animate-op{
+    animation: opacityanimate   1s ease-in-out ;
+  }
+@keyframes  fade-in-bouncedown {
+    0% {
+        opacity: 0,
+        transform translate3d(0%, -100%, 0)
+    }
+    33% {
+        opacity: 0.5,
+        transform translate3d(0%, 0%, 0)
+    }
+    66% {
+        opacity: 0.7,
+        transform translate3d(0%, -20%, 0)
+    }
+    100% {
+        opacity: 1,
+        transform translate3d(0, 0, 0)
+    }
+}
+.fadeinbouncedown{
+   animation: fade-in-bouncedown 1s ease-in-out 0.25s 1
+
+} 
+@keyframes section3 {
+    0%{
+        transform: translateX(-100%);
+    }
+    100%{
+        transform: translateX(0px);
+    }
+    
+}
+.sect3{
+    animation: section3 1s ease-in-out ;
+}
+
+@keyframes fade-in-right-normal {0% { transform: translateX(50px); opacity: 0; } 100% { transform: translateX(0); opacity: 1;} } 
+    
+.fade-in-right-normal { 
+    animation: fade-in-right-normal 1s ease 0s 1 normal none; 
+}
