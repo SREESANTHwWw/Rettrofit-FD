@@ -74,7 +74,7 @@ const AddProduct = () => {
 
   return (
     <div className="bg-white rounded-lg shadow-sm p-4">
-      <div className="flex justify-between items-center mb-4">
+      <div className="flex justify-center items-center mb-4">
         <div className="bg-white w-96 p-6 rounded-md shadow-lg">
           <h2 className="text-lg font-semibold mb-4">Add Product</h2>
           <form onSubmit={addProductFun}>
@@ -143,7 +143,7 @@ const AddProduct = () => {
             </div>
 
             <div className="flex justify-end gap-4">
-              <button type="submit" className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600">
+              <button type="submit" className="px-4 py-2 bg-teal-500 text-white rounded-md hover:bg-green-600">
                 Submit
               </button>
             </div>

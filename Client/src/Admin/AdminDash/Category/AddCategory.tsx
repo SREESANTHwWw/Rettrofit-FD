@@ -26,11 +26,11 @@ const AddCategory = () => {
   }
 
   return (
-  <div className="bg-white rounded-lg shadow-sm p-4">
+  <div className="bg-white rounded-lg  p-4">
       {/* Header Section */}
-      <div className="flex justify-between items-center mb-4">
+      <div className="flex justify-center items-center mb-4">
    
-        <div className="bg-white w-96 p-6 rounded-md shadow-lg">
+        <div className="bg-white w-96 p-6 rounded-md ">
           <h2 className="text-lg font-semibold mb-4">
             Add/Edit Category
           </h2>
@@ -55,7 +55,7 @@ const AddCategory = () => {
           
               <button
                 type="submit"
-                className="px-4 py-2 bg-green-500 text-white rounded-md hover:bg-green-600"
+                className="px-4 py-2 bg-teal-500 text-white rounded-md hover:bg-green-600"
               >
                 Submit
               </button>

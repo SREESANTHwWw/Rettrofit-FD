@@ -19,11 +19,11 @@ const Sidebar = () => {
   };
 
   const menuItems = [
-    { icon: <LayoutDashboard size={20} />, label: 'Dashboard', section: 'dashboard' },
-    { icon: <Settings size={20} />, label: 'Category Settings', section: 'category' },
-    { icon: <Settings size={20} />, label: 'Product Settings', section: 'product' },
-    { icon: <Settings size={20} />, label: ' All Products ', section: 'showproduct' },
-    { icon: <Users size={20} />, label: 'Users', section: 'users' },
+    { icon: <LayoutDashboard size={23} className='text-teal-600 font-medium' />, label: 'Dashboard', section: 'dashboard' },
+    { icon: <Settings size={23} className='text-teal-600 font-medium' />, label: 'Category Settings', section: 'category' },
+    { icon: <Settings size={23} className='text-teal-600 font-medium' />, label: 'Product Settings', section: 'product' },
+    { icon: <Settings size={23} className='text-teal-600 font-medium'/>, label: ' All Products ', section: 'showproduct' },
+    { icon: <Users size={23} className='text-teal-600 font-medium' />, label: 'Users', section: 'users' },
    
    
   
@@ -34,9 +34,14 @@ const Sidebar = () => {
       {/* Sidebar */}
       <div className={`h-screen  bg-white transition-all duration-300 ${isCollapsed ? 'w-16' : 'w-64'}`}>
         {/* Header */}
-        <div className="p-5 border-b flex items-center gap-4">
+        <div className="p-5  flex items-center gap-4">
          
-          {!isCollapsed && <h2 className="font-semibold bg-blue-800  flex items-center justify-center rounded-md w-[120px] h-[40px]  text-white">DILS TRADING</h2>}
+          {!isCollapsed &&  <img
+                src="/retro.png"
+                alt="Logo"
+                className={`{
+                   w-32 h-20 object-contain hover:scale-105 transition-transform duration-300`}
+              />}
           <button
             className="ml-auto hover:bg-gray-100 p-2 rounded-lg"
             onClick={toggleSidebar}
@@ -50,9 +55,9 @@ const Sidebar = () => {
           {menuItems.map((item, index) => (
             <ul key={index}>
               <li className="flex items-center gap-4 py-2">
-                {item.icon}
+                {item.icon }
                 {!isCollapsed && (
-                  <Link to={`/admin/${item.section}`} className="font-medium text-gray-700 hover:text-blue-500">
+                  <Link to={`/admin/${item.section}`} className="font-medium text-gray-700 hover:text-teal-600">
                     {item.label}
                   </Link>
                 )}

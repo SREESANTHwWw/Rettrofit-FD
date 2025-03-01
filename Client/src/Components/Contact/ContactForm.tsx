@@ -1,6 +1,6 @@
 
 import Contact from './Contact'
-import FeaturesSection from '../Body/FeaturesSection'
+
 import { FeaturesSection2 } from '../Body/FeaturesSection2'
 
 import Footer from '../Body/Footer'
@@ -11,15 +11,14 @@ const ContactForm = () => {
   <div className="w-full">
        <Contact/>
       </div>
-      <div className="w-full   px-4 mt-[90vh]">
-       <FeaturesSection/>
-      </div>
-      <div className="w-full   px-4 mt-[10vh] ">
+      
+      <div className="w-full   px-4 mt-[100vh] ">
        <FeaturesSection2/>
       </div>
-      <div className="w-full   px-4 mt-[10vh] ">
+      <div className="w-full    mt-[10vh] ">
        <Footer/>
       </div>
+
 
     </div>
   )

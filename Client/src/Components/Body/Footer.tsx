@@ -74,7 +74,7 @@ const Footer = () => {
         href="https://wa.me/919567641722"
         target="_blank"
         rel="noopener noreferrer"
-        className="fixed bottom-5 right-5 bg-green-500 p-3 rounded-full shadow-lg hover:bg-green-600 transition"
+        className="fixed bottom-5 right-5 z-50 bg-green-500 p-3 rounded-full shadow-lg hover:bg-green-600 transition"
         title="Contact us on WhatsApp"
       >
         <MdWhatsapp  fontSize={"20px"}  className="h-10 w-10 text-white"/>

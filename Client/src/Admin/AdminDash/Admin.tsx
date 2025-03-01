@@ -22,7 +22,7 @@ const Admin = () => {
         {/* Header */}
         <header className="flex justify-between items-center bg-white shadow-md p-4">
           {/* Page Title */}
-          <h1 className="text-xl font-semibold text-gray-800">Admin Dashboard</h1>
+          <h1 className="text-xl font-semibold text-teal-700">Admin Dashboard</h1>
 
           {/* User Account Dropdown */}
           <div className="relative dropdown">
@@ -31,7 +31,7 @@ const Admin = () => {
               className="flex items-center gap-2 p-2 rounded-full bg-gray-100 hover:bg-gray-200"
               title="User Account"
             >
-              <UserCircleIcon className="h-8 w-8 text-gray-700" />
+              <UserCircleIcon className="h-8 w-8 text-teal-700" />
               <ChevronDownIcon className="h-5 w-5 text-gray-700" />
             </button>
             {dropdownOpen && (
