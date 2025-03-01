@@ -1,1 +1,1 @@
-export const Server = "http://localhost:5000/api/v1"
+export const Server = "https://rettrofit-bd-1.onrender.com/api/v1"
