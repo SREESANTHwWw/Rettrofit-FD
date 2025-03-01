@@ -244,7 +244,7 @@ const NavBar1 = () => {
                 </Link>
               </div>
 
-              <div className="flex  bg-amber-700 items-center space-x-4">
+              <div className="flex   items-center space-x-4">
                
                 <button title="Search" className="p-2 rounded-full hover:bg-emerald-400/20 transition-colors duration-300">
                   <IoSearch
