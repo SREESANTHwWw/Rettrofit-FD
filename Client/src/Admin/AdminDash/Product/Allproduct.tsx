@@ -1,8 +1,7 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react'
 import { Server } from '../../../Server';
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Pagination, Autoplay } from "swiper/modules";
+
 
 
 const Allproduct = () => {
@@ -199,6 +198,7 @@ const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
       <button
         onClick={() => setOpenEdit(false)}
         className="absolute top-4 right-4 text-gray-700 hover:text-red-500 text-2xl font-bold"
+        title="Close"
       >
     
       </button>

@@ -1,6 +1,6 @@
-import React from 'react';
+
 import NavBar1 from '../NavBar1/NavBar1';
-import FeaturesSection from '../Body/FeaturesSection';
+;
 import { FeaturesSection2 } from '../Body/FeaturesSection2';
 import FeaturesSections3 from '../Body/FeaturesSections3';
 import FeaturesSection4 from '../Body/FeaturesSection4';

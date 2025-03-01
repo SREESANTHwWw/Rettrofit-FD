@@ -1,4 +1,4 @@
-import React from 'react'
+
 
 const FeatureSection5 = () => {
   return (

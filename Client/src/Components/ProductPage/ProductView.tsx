@@ -2,10 +2,10 @@ import React, { useEffect, useState } from "react";
 import NavbarForProduct from "./NavbarForProduct";
 import axios from "axios";
 import { Server } from "../../Server";
-import { Link,useParams } from "react-router-dom";
-import BenefitsSection from "../../Pages/BenefitsSection";
+import { useParams } from "react-router-dom";
+
 import Footer from "../Body/Footer";
-import { toast } from "react-toastify";
+
 import { motion } from "framer-motion";
 
 

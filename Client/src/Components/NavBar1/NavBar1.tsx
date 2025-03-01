@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { IoBagRemoveOutline, IoSearch, IoMenu, IoClose } from "react-icons/io5";
 import { FaMapLocation } from "react-icons/fa6";
 
-import { FaPhone } from "react-icons/fa6";
+
 
 import { MdEmail } from "react-icons/md";
 import { FetchContext } from "../Contexts/FetchContext";
@@ -16,7 +16,7 @@ const NavBar1 = () => {
   const [isMenuOpen, setIsMenuOpen] = useState<Boolean>(false);
   const [scolled, setScrolled] = useState<Boolean>(false);
   const [productshow, setProductshow] = useState<Boolean>(false);
-  const [category, setCategories] = useState([]);
+  
   const [product, setProduct] = useState([]);
   const [productshow1, setProductshow1] = useState<Boolean>(false);
   const navigate = useNavigate();
@@ -246,7 +246,7 @@ const NavBar1 = () => {
 
               <div className="flex  bg-amber-700 items-center space-x-4">
                
-                <button className="p-2 rounded-full hover:bg-emerald-400/20 transition-colors duration-300">
+                <button title="Search" className="p-2 rounded-full hover:bg-emerald-400/20 transition-colors duration-300">
                   <IoSearch
                     className={`text-2xl ${
                       scolled ? "text-black" : "text-white"
@@ -297,10 +297,10 @@ const NavBar1 = () => {
                   </Link>
                 ))}
                 <div className="flex space-x-6 mt-8">
-                  <button className="p-2">
+                  <button className="p-2" title="Remove Bag">
                     <IoBagRemoveOutline className="text-2xl text-white hover:text-emerald-400" />
                   </button>
-                  <button className="p-2">
+                  <button className="p-2" title="Search">
                     <IoSearch className="text-2xl text-white hover:text-emerald-400" />
                   </button>
                 </div>

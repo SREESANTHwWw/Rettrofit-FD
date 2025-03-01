@@ -11,9 +11,14 @@ const AddCategory = () => {
     axios.post(`${Server}/create-category`,{
         categoryname
     }).then((res)=>{
+      if(res.data.msg === "category created success"){
         toast.success("Category created")
+      }
+           
+       
     }).catch((error)=>{
-        toast.error("Category Creation failed")
+        toast.error("Category Creation failed",)
+        console.log(error)
     })
 
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import  { useState } from 'react'
 import { Route, Routes } from 'react-router-dom'
 import { UserCircleIcon, ChevronDownIcon } from "@heroicons/react/24/solid";
 import Sidebar from './Sidebar';
@@ -7,7 +7,7 @@ import AddProduct from './Product/AddProduct';
 import Allproduct from './Product/Allproduct';
 
 const Admin = () => {
-    const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  
     const [dropdownOpen, setDropdownOpen] = useState(false)
     const toggleDropdown = () => {
         setDropdownOpen(!dropdownOpen);
@@ -29,6 +29,7 @@ const Admin = () => {
             <button
               onClick={toggleDropdown}
               className="flex items-center gap-2 p-2 rounded-full bg-gray-100 hover:bg-gray-200"
+              title="User Account"
             >
               <UserCircleIcon className="h-8 w-8 text-gray-700" />
               <ChevronDownIcon className="h-5 w-5 text-gray-700" />

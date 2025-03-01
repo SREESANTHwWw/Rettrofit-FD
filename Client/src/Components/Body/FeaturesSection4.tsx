@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { MdEngineering, MdPrecisionManufacturing, MdAccessTime } from "react-icons/md";
 import { FaHandshakeSimple } from "react-icons/fa6";
 

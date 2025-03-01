@@ -1,4 +1,4 @@
-import React from 'react';
+
 import { FaMapMarkerAlt, FaPhoneAlt, FaEnvelope } from "react-icons/fa";
 import { MdWhatsapp } from "react-icons/md";
 
@@ -75,6 +75,7 @@ const Footer = () => {
         target="_blank"
         rel="noopener noreferrer"
         className="fixed bottom-5 right-5 bg-green-500 p-3 rounded-full shadow-lg hover:bg-green-600 transition"
+        title="Contact us on WhatsApp"
       >
         <MdWhatsapp  fontSize={"20px"}  className="h-10 w-10 text-white"/>
        
