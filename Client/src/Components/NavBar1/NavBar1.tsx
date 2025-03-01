@@ -136,7 +136,7 @@ const NavBar1 = () => {
 
         {/* Main Navigation */}
         <nav className={`w-full  sm:bg-transparent ${scolled ? "bg-white shadow-2xl ":"bg-transparent"}  `}  >
-          <div className="w-[85%] bg-amber-300 mx-auto flex justify-between items-center py-2 relative">
+          <div className="w-[85%]  mx-auto flex justify-between items-center py-2 relative">
             {/* Logo */}
 
             {/* Desktop Navigation */}
