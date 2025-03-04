@@ -22,6 +22,7 @@ const Sidebar = () => {
     { icon: <LayoutDashboard size={23} className='text-teal-600 font-medium' />, label: 'Dashboard', section: 'dashboard' },
     { icon: <Settings size={23} className='text-teal-600 font-medium' />, label: 'Category Settings', section: 'category' },
     { icon: <Settings size={23} className='text-teal-600 font-medium' />, label: 'Product Settings', section: 'product' },
+    { icon: <Settings size={23} className='text-teal-600 font-medium' />, label: 'Services Settings', section: 'servicesAdd' },
     { icon: <Settings size={23} className='text-teal-600 font-medium'/>, label: ' All Products ', section: 'showproduct' },
     { icon: <Users size={23} className='text-teal-600 font-medium' />, label: 'Users', section: 'users' },
    

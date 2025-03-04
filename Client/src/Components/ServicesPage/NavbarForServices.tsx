@@ -1,32 +1,36 @@
 import { useContext, useEffect, useState } from "react";
 
 import { Link, useNavigate } from "react-router-dom";
-import {  IoSearch, IoMenu, IoClose } from "react-icons/io5";
+import { IoSearch, IoMenu, IoClose } from "react-icons/io5";
 import { FaMapLocation } from "react-icons/fa6";
 
 import { MdEmail } from "react-icons/md";
 import { FetchContext } from "../Contexts/FetchContext";
 import axios from "axios";
 import { Server } from "../../Server";
+import FeaturesSection from "../Body/FeaturesSection";
 import _ from "lodash";
 
 
-const Contact = () => {
+const NavbarForServices = () => {
   const [isMenuOpen, setIsMenuOpen] = useState<Boolean>(false);
   const [scolled, setScrolled] = useState<Boolean>(false);
   const [productshow, setProductshow] = useState<Boolean>(false);
 
   const [product, setProduct] = useState([]);
   const [productshow1, setProductshow1] = useState<Boolean>(false);
-  const [servicesData, setServicesData] = useState([]);
-
+  // const [servicesData, setServicesData] = useState([]);
+  const [ViewService, setViewService] = useState<Boolean>(false);
+  const [underServiceData, setUnderServiceData] = useState([]);
   const [service, setservice] = useState<Boolean>(false);
   const navigate = useNavigate();
 
   const context = useContext(FetchContext)?.categories ?? [];
 
+  const serviceContext = useContext(FetchContext)?.servicesData ?? [];
   const categories = context;
-
+  const servicesData = serviceContext;
+  console.log(servicesData);
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 50) {
@@ -35,12 +39,19 @@ const Contact = () => {
         setScrolled(false);
       }
     };
-    const throttledScroll = _.throttle(handleScroll, 100);
-    window.addEventListener("scroll", throttledScroll);
+    const throttedScroll = _.throttle(handleScroll, 100);
+    window.addEventListener("scroll", throttedScroll);
     return () => {
-      window.removeEventListener("scroll", throttledScroll);
+      window.removeEventListener("scroll", throttedScroll);
     };
   }, []);
+
+  const handleServiceUnderClick = (id: string) => {
+    setViewService(true);
+    axios.get(`${Server}/get-underService/${id}`).then((res) => {
+      setUnderServiceData(res.data.serviceget);
+    });
+  };
 
   const handleCategoryClick = (id: string) => {
     setProductshow1(true);
@@ -51,34 +62,25 @@ const Contact = () => {
 
   const handlerservice = () => {
     setservice(true);
-    axios.get(`${Server}/get-service`).then((res) => {
-      setServicesData(res.data.serviceget || []); // Ensure it's an array
-    });
   };
   const handleProductClick = (id: string) => {
     navigate(`/products/${id}`);
   };
 
-  // const navLinks = [
-  //   { name: "Home", path: "/home" },
-  //   { name: "Products", path: "/products" },
-  //   { name: "Service", path: "/services" },
-  //   { name: "Contactus", path: "/contactus" },
-  //   { name: "About", path: "/about" },
-  //   { name: "FAQ", path: "/faq" },
-  // ];
+  const handleServiceClick = (id: string) => {
+    navigate(`/services/${id}`);
+  };
 
-const handlerserviceopen = () => {  
-  setservice(true);
-  setProductshow(false);
-  setProductshow1(false);
-};
+  const handlerserviceopen = () => {
+    setservice(true);
+    setProductshow(false);
+    setProductshow1(false);
+  };
 
-const categoryProductClose = () => {
-  setProductshow(false);
-  setProductshow1(false);
-
-};
+  const categoryProductClose = () => {
+    setProductshow(false);
+    // setProductshow1(false);
+  };
 
   const handlerProduct = () => {
     setProductshow(true);
@@ -87,7 +89,7 @@ const categoryProductClose = () => {
   const handlerSMProduct = () => {
     setProductshow((prev) => !prev);
   };
-  console.log(categories);
+
   return (
     <div className="w-full bg-transparent relative z-10">
       {/* Top Contact Bar */}
@@ -172,30 +174,48 @@ const categoryProductClose = () => {
                   </span>
                 </Link>
 
-                <button className="relative cursor-pointer h-[45px] flex font-medium bg-teal-500 justify-center items-center w-30 overflow-hidden text-md  text-white shadow-2xl transition-all before:absolute before:left-0 before:top-0 before:h-full before:w-0 before:duration-500 after:absolute after:right-0 after:top-0 after:h-full after:w-0 after:duration-500 hover:text-white  rounded-md hover:before:w-2/4 hover:before:bg-blue-800 hover:after:w-2/4 hover:after:bg-blue-800"  onClick={handlerserviceopen}>
+                <button
+                  className="relative cursor-pointer h-[45px] flex font-medium bg-teal-500 justify-center items-center w-30 overflow-hidden text-md  text-white shadow-2xl transition-all before:absolute before:left-0 before:top-0 before:h-full before:w-0 before:duration-500 after:absolute after:right-0 after:top-0 after:h-full after:w-0 after:duration-500 hover:text-white  rounded-md hover:before:w-2/4 hover:before:bg-blue-800 hover:after:w-2/4 hover:after:bg-blue-800"
+                  onClick={handlerserviceopen}
+                >
                   <span
                     className={`${scolled ? "text-black" : ""} relative z-10`}
-                  
-                   
                   >
                     Service
                   </span>
-               
 
                   {/* Dropdown */}
                 </button>
                 {service && (
                   <div
-                    className="absolute top-[3.7rem] z-40 left-[185px] w-64 bg-white shadow-lg rounded-md border text-black "
+                    className="absolute top-[3.7rem] z-40 left-[185px] w-52 bg-white shadow-lg rounded-md border text-black "
                     onMouseEnter={handlerservice}
                     onMouseLeave={() => setservice(false)}
                   >
-                    <ul className="space-y-2">
+                    <ul className="space-y-2 p-1">
                       {servicesData.map((item: any) => (
                         <li
                           key={item._id}
                           className="gap-2 text-md hover:underline-offset-8 font-medium p-2 rounded-md transition-colors duration-200 hover:underline cursor-pointer hover:decoration-teal-500"
-                          // onMouseEnter={() => handleCategoryClick(item._id)}
+                          onMouseEnter={() => handleServiceUnderClick(item._id)}
+                        >
+                          {item.servicename}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {ViewService && (
+                  <div
+                    className="absolute top-[5rem] z-40 left-[394px] w-64 bg-white shadow-lg rounded-md border text-black "
+                    onMouseLeave={() => setViewService(false)}
+                  >
+                    <ul className="space-y-2">
+                      {underServiceData.map((item: any) => (
+                        <li
+                          key={item._id}
+                          className="gap-2 text-md hover:underline-offset-8 font-medium p-2 rounded-md transition-colors duration-200 hover:underline cursor-pointer hover:decoration-teal-500"
+                          onClick={() => handleServiceClick(item._id)}
                         >
                           {item.servicename}
                         </li>
@@ -229,7 +249,6 @@ const categoryProductClose = () => {
                     className="absolute top-[3.7rem] z-40 left-[320px]  w-full max-w-[250px] bg-white shadow-lg rounded-md border text-black "
                     onMouseEnter={handlerProduct}
                     onMouseLeave={categoryProductClose}
-                  
                   >
                     <ul className="space-y-2">
                       {categories.map((item: any) => (
@@ -247,7 +266,7 @@ const categoryProductClose = () => {
                 )}
                 {productshow1 && (
                   <div
-                    className="absolute top-[5.5rem] left-[570px] z  w-full max-w-xs border bg-white shadow-lg  rounded-md text-black z-50"
+                    className="absolute top-[5rem] left-[570px] z  w-full max-w-xs border bg-white shadow-lg  rounded-md text-black z-50"
                     onMouseEnter={handlerProduct}
                     onMouseLeave={() => setProductshow1(false)}
                   >
@@ -430,66 +449,9 @@ const categoryProductClose = () => {
       </div>
 
       {/* Hero Section */}
-      <div className="  absolute inset-x-0 top-0 bg  -z-10 h-[800px] ">
-<img
-  src="/product-bg.jpg"
-  alt="Background"
-  className="w-full h-full object-cover  shadow-2xl "
-/>
-<div className="absolute inset-0 bg-black/60  flex items-center mt-40  rounded-br-[200px]">
-  <div className="w-[80%] mx-auto text-white animate-op ">
-  
-<div className="relative max-w-8xl  w-full bg-transparent p-10">
-<h1 className="text-4xl font-bold text-white mb-6">Let's get in touch!</h1>
-
-<div className="grid =  grid-cols-1 justify-item-between md:grid-cols-2 gap-8">
-  {/* Form */}
-  <form className="space-y-4">
-    <div>
-      <label className="text-white block mb-2">Name</label>
-      <input type="text" placeholder="Enter your name" 
-        className="w-full p-3 bg-transparent border border-white text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"/>
-    </div>
-
-    <div>
-      <label className="text-white block mb-2">Email</label>
-      <input type="email" placeholder="Enter your email" 
-        className="w-full p-3 bg-transparent border border-white text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"/>
-    </div>
-
-    <div>
-      <label className="text-white block mb-2">Contact Number</label>
-      <input type="tel" placeholder="Enter your contact number" 
-        className="w-full p-3 bg-transparent border border-white text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300"/>
-    </div>
-
-    <div>
-      
-      <label htmlFor="service" className="text-white block mb-2">Service</label>
-      <select id="service" className="w-full p-3 bg-transparent border border-white text-white rounded-md focus:outline-none focus:ring-2 focus:ring-blue-300">
-        <option className="bg-gray-900 text-white" value="" disabled selected>Select a service</option>
-        <option className="bg-gray-900 text-white" value="web-design">Web Design</option>
-        <option className="bg-gray-900 text-white" value="development">Development</option>
-        <option className="bg-gray-900 text-white" value="seo">SEO Optimization</option>
-      </select>
-    </div>
-
-    <button 
-      className="w-full p-3 bg-yellow-500 hover:bg-yellow-600 text-black font-bold rounded-md transition">
-      Submit
-    </button>
-  </form>
-
-
-
-</div>
-</div>
-
-  </div>
-</div>
-</div>
+   
     </div>
   );
 };
 
-export default Contact;
+export default NavbarForServices;

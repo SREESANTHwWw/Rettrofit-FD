@@ -7,13 +7,13 @@ import { IoArrowForwardOutline } from "react-icons/io5";
 import axios from "axios";
 import { Server } from "../../Server";
 import { toast } from "react-toastify";
-// import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
   const [username, setusername] = useState("");
   const [password, setPassword] = useState("");
   const [visible, setVisible] = useState(false);
-  // const navigate = useNavigate()
+  const navigate = useNavigate()
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,7 +29,7 @@ const Login = () => {
         toast.success("Login success");
    
 
-        // navigate("/admin/dash")
+        navigate("/admin/dashboard")
       }).catch((err)=>{
         console.log(err)
         toast.error(err.response.data.msg)

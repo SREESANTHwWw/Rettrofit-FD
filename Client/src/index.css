@@ -1,5 +1,9 @@
 @import "tailwindcss";
 
+
+body {
+  font-family: 'Red Hat Display', sans-serif;
+}
 @keyframes opacityanimate {
 
     0% {opacity: 0%;}

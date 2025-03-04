@@ -12,7 +12,7 @@ const ContactForm = () => {
        <Contact/>
       </div>
       
-      <div className="w-full   px-4 mt-[100vh] ">
+      <div className="w-full   mt-[110vh] ">
        <FeaturesSection2/>
       </div>
       <div className="w-full    mt-[10vh] ">

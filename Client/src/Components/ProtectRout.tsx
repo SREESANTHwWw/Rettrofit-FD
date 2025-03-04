@@ -1,27 +1,45 @@
-// import { ReactNode } from "react";
-// import { Navigate } from "react-router-dom";
-// import {jwtDecode} from "jwt-decode";
+import { ReactNode } from "react";
+import { Navigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
 
-// interface ProtectedRouteProps {
-//   children: ReactNode;
-//   allowedTypes?: string[]; // Optional array of allowed roles
-// }
+interface DecodedToken {
+  role?: string;
+  exp?: number; 
+  // Token expiration timestamp
+}
 
-// const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, allowedTypes }) => {
-//   const tokenData = localStorage.getItem("token");
-//   const decodedToken = jwtDecode(tokenData);
+interface ProtectedRouteProps {
+  children: ReactNode;
+  allowedTypes?: string[];
+}
 
-//   if (!decodedToken) {
-//     return <Navigate to="/login" replace />;
-//   }
+const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, allowedTypes }) => {
+  const token = localStorage.getItem("token");
 
-//   // Check if the role is allowed
-//   if (allowedTypes && !allowedTypes.includes(decodedToken.role)) {
-//     return <Navigate to="/login" replace />;
-//   }
+  if (!token) {
+    console.log("No token found, redirecting to login.");
+    return <Navigate to="/login" replace />;
+  }
 
-//   return <>{children}</>;
-// };
+  try {
+    const decoded: DecodedToken = jwtDecode(token);
+    console.log("Decoded Token:", decoded);
 
-// export default ProtectedRoute;
+    if (!decoded.role) {
+      console.log("No role found in token, redirecting to login.");
+      return <Navigate to="/login" replace />;
+    }
 
+    if (allowedTypes && !allowedTypes.includes(decoded.role)) {
+      console.log("Role not allowed:", decoded.role);
+      return <Navigate to="/admin/dashboard" replace />;
+    }
+
+    return <>{children}</>;
+  } catch (error) {
+    console.error("Error decoding token:", error);
+    return <Navigate to="/login" replace />;
+  }
+};
+
+export default ProtectedRoute;

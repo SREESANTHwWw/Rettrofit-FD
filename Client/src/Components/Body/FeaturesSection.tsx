@@ -2,9 +2,11 @@ import { useState, useEffect } from "react";
 import { FaTools, FaLandmark, FaShieldAlt } from "react-icons/fa";
 import { MdOutlineError } from "react-icons/md";
 import Slider from "react-slick";
-import { motion } from "framer-motion";
+import {  motion } from "framer-motion";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import {Tilt} from "react-tilt"
+
 
 const features = [
   { icon: <FaTools size={40} />, title: "Integrity", text: "Taking seamless key performance indicators offline to maximize the tail processes." },
@@ -24,6 +26,19 @@ const settings = {
   autoplaySpeed: 3000,
   arrows: false, // Hide next/prev arrows
 };
+
+const customOptions = {
+  reverse:true,
+  max:45,
+  perspective:1500,
+  Scale:1.2,
+  speed:2000,
+  // transition:ture,
+  axis:"X",
+  reset:false,
+  easeIn:"cubic-bezier(.2,.8,.3,1)"
+
+}
 
 const FeaturesSection = () => {
   const [isMobile, setIsMobile] = useState(false);
@@ -65,7 +80,7 @@ const FeaturesSection = () => {
         // Show normal 4 divs in grid on larger screens
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 ">
           {features.map((feature, index) => (
-            <motion.div
+            <Tilt options={customOptions}
               key={index}
               whileHover={{ scale: 1.05 }}
               className="text-center p-6 h-fit w-[350px]  rounded-xl shadow-lg backdrop-blur-md  transition-transform"
@@ -74,7 +89,7 @@ const FeaturesSection = () => {
               <h3 className="text-lg font-bold text-white">{feature.title}</h3>
               <div className="w-12 h-1 bg-emerald-500 mx-auto my-2"></div>
               <p className="text-teal-500">{feature.text}</p>
-            </motion.div>
+            </Tilt>
           ))}
         </div>
       )}

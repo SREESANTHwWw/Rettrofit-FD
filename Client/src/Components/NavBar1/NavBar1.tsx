@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 
 import { Link, useNavigate } from "react-router-dom";
-import {  IoSearch, IoMenu, IoClose } from "react-icons/io5";
+import { IoSearch, IoMenu, IoClose } from "react-icons/io5";
 import { FaMapLocation } from "react-icons/fa6";
 
 import { MdEmail } from "react-icons/md";
@@ -9,6 +9,7 @@ import { FetchContext } from "../Contexts/FetchContext";
 import axios from "axios";
 import { Server } from "../../Server";
 import FeaturesSection from "../Body/FeaturesSection";
+import _ from "lodash";
 
 const NavBar1 = () => {
   const [isMenuOpen, setIsMenuOpen] = useState<Boolean>(false);
@@ -17,15 +18,19 @@ const NavBar1 = () => {
 
   const [product, setProduct] = useState([]);
   const [productshow1, setProductshow1] = useState<Boolean>(false);
-  const [servicesData, setServicesData] = useState([]);
-
+  // const [servicesData, setServicesData] = useState([]);
+  const [ViewService, setViewService] = useState<Boolean>(false);
+  const [underServiceData, setUnderServiceData] = useState([]);
   const [service, setservice] = useState<Boolean>(false);
   const navigate = useNavigate();
-
+  const [category_id ,setCategoty_id] = useState("")
+  const [productId,setProduct_id] =useState("")
   const context = useContext(FetchContext)?.categories ?? [];
 
+  const serviceContext = useContext(FetchContext)?.servicesData ?? [];
   const categories = context;
-
+  const servicesData = serviceContext;
+  console.log(servicesData);
   useEffect(() => {
     const handleScroll = () => {
       if (window.scrollY > 50) {
@@ -34,11 +39,19 @@ const NavBar1 = () => {
         setScrolled(false);
       }
     };
-    window.addEventListener("scroll", handleScroll);
+    const throttedScroll = _.throttle(handleScroll, 100);
+    window.addEventListener("scroll", throttedScroll);
     return () => {
-      window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("scroll", throttedScroll);
     };
   }, []);
+
+  const handleServiceUnderClick = (id: string) => {
+    setViewService(true);
+    axios.get(`${Server}/get-underService/${id}`).then((res) => {
+      setUnderServiceData(res.data.serviceget);
+    });
+  };
 
   const handleCategoryClick = (id: string) => {
     setProductshow1(true);
@@ -49,34 +62,40 @@ const NavBar1 = () => {
 
   const handlerservice = () => {
     setservice(true);
-    axios.get(`${Server}/get-service`).then((res) => {
-      setServicesData(res.data.serviceget || []); // Ensure it's an array
-    });
   };
-  const handleProductClick = (id: string) => {
-    navigate(`/products/${id}`);
+  const handleProductClick = (item: any) => {
+    const categoryId = item.undercategory; // Store in a local variable
+    const productId = item._id;
+    setCategoty_id(categoryId);
+    setProduct_id(productId);
+  
+    navigate(`/products/${categoryId}/${productId}`); // Use local variables
+  };
+  
+
+  const handleServiceClick = (id: string) => {
+    navigate(`/services/${id}`);
   };
 
-  // const navLinks = [
-  //   { name: "Home", path: "/home" },
-  //   { name: "Products", path: "/products" },
-  //   { name: "Service", path: "/services" },
-  //   { name: "Contactus", path: "/contactus" },
-  //   { name: "About", path: "/about" },
-  //   { name: "FAQ", path: "/faq" },
-  // ];
+  const handlerserviceopen = () => {
+    setservice(true);
+    setProductshow(false);
+    setProductshow1(false);
+  };
 
-const handlerserviceopen = () => {  
-  setservice(true);
-};
+  const categoryProductClose = () => {
+    setProductshow(false);
+    // setProductshow1(false);
+  };
 
   const handlerProduct = () => {
     setProductshow(true);
+    setservice(false);
   };
   const handlerSMProduct = () => {
     setProductshow((prev) => !prev);
   };
-  console.log(categories);
+
   return (
     <div className="w-full bg-transparent relative z-10">
       {/* Top Contact Bar */}
@@ -161,30 +180,48 @@ const handlerserviceopen = () => {
                   </span>
                 </Link>
 
-                <button className="relative cursor-pointer h-[45px] flex font-medium bg-teal-500 justify-center items-center w-30 overflow-hidden text-md  text-white shadow-2xl transition-all before:absolute before:left-0 before:top-0 before:h-full before:w-0 before:duration-500 after:absolute after:right-0 after:top-0 after:h-full after:w-0 after:duration-500 hover:text-white  rounded-md hover:before:w-2/4 hover:before:bg-blue-800 hover:after:w-2/4 hover:after:bg-blue-800"  onClick={handlerserviceopen}>
+                <button
+                  className="relative cursor-pointer h-[45px] flex font-medium bg-teal-500 justify-center items-center w-30 overflow-hidden text-md  text-white shadow-2xl transition-all before:absolute before:left-0 before:top-0 before:h-full before:w-0 before:duration-500 after:absolute after:right-0 after:top-0 after:h-full after:w-0 after:duration-500 hover:text-white  rounded-md hover:before:w-2/4 hover:before:bg-blue-800 hover:after:w-2/4 hover:after:bg-blue-800"
+                  onClick={handlerserviceopen}
+                >
                   <span
                     className={`${scolled ? "text-black" : ""} relative z-10`}
-                  
-                   
                   >
                     Service
                   </span>
-               
 
                   {/* Dropdown */}
                 </button>
                 {service && (
                   <div
-                    className="absolute top-[3.7rem] z-40 left-[185px] w-64 bg-white shadow-lg rounded-md border text-black "
+                    className="absolute top-[3.7rem] z-40 left-[185px] w-52 bg-white shadow-lg rounded-md border text-black "
                     onMouseEnter={handlerservice}
                     onMouseLeave={() => setservice(false)}
                   >
-                    <ul className="space-y-2">
+                    <ul className="space-y-2 p-1">
                       {servicesData.map((item: any) => (
                         <li
                           key={item._id}
-                          className="hover:bg-emerald-100 p-2 rounded-md transition-colors duration-200"
-                          // onMouseEnter={() => handleCategoryClick(item._id)}
+                          className="gap-2 text-md hover:underline-offset-8 font-medium p-2 rounded-md transition-colors duration-200 hover:underline cursor-pointer hover:decoration-teal-500"
+                          onMouseEnter={() => handleServiceUnderClick(item._id)}
+                        >
+                          {item.servicename}
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {ViewService && (
+                  <div
+                    className="absolute top-[5rem] z-40 left-[394px] w-64 bg-white shadow-lg rounded-md border text-black "
+                    onMouseLeave={() => setViewService(false)}
+                  >
+                    <ul className="space-y-2">
+                      {underServiceData.map((item: any) => (
+                        <li
+                          key={item._id}
+                          className="gap-2 text-md hover:underline-offset-8 font-medium p-2 rounded-md transition-colors duration-200 hover:underline cursor-pointer hover:decoration-teal-500"
+                          onClick={() => handleServiceClick(item._id)}
                         >
                           {item.servicename}
                         </li>
@@ -215,16 +252,17 @@ const handlerserviceopen = () => {
                 </Link>
                 {productshow && (
                   <div
-                    className="absolute top-[3.7rem] z-40 left-[300px] w-48 bg-white shadow-lg rounded-md border text-black "
+                    className="absolute top-[3.7rem] z-40 left-[320px]  w-full max-w-[250px] bg-white shadow-lg rounded-md border text-black "
                     onMouseEnter={handlerProduct}
-                    onMouseLeave={() => setProductshow(false)}
+                    onMouseLeave={categoryProductClose}
                   >
                     <ul className="space-y-2">
                       {categories.map((item: any) => (
                         <li
                           key={item._id}
-                          className="hover:bg-emerald-100 p-2 rounded-md transition-colors duration-200"
+                          className="gap-2 text-[16px] font-medium hover:underline-offset-8 p-2 rounded-md transition-colors duration-200 hover:underline cursor-pointer hover:decoration-teal-500"
                           onMouseEnter={() => handleCategoryClick(item._id)}
+                          style={{ fontFamily: "Red Hat Display, sans-serif" }}
                         >
                           {item.categoryname}
                         </li>
@@ -234,7 +272,7 @@ const handlerserviceopen = () => {
                 )}
                 {productshow1 && (
                   <div
-                    className="absolute top-[5.5rem] left-[492px] w-48 border bg-white shadow-lg  rounded-md text-black z-20"
+                    className="absolute top-[5rem] left-[570px] z  w-full max-w-xs border bg-white shadow-lg  rounded-md text-black z-50"
                     onMouseEnter={handlerProduct}
                     onMouseLeave={() => setProductshow1(false)}
                   >
@@ -242,8 +280,8 @@ const handlerserviceopen = () => {
                       {product.map((item: any) => (
                         <li
                           key={item._id}
-                          className="hover:bg-emerald-100 p-2 rounded-md transition-colors duration-200"
-                          onClick={() => handleProductClick(item._id)}
+                          className="gap-2 text-md hover:underline-offset-8 font-medium p-2 rounded-md transition-colors duration-200 hover:underline cursor-pointer hover:decoration-teal-500"
+                          onClick={() => handleProductClick(item)}
                         >
                           {item.productname}
                         </li>

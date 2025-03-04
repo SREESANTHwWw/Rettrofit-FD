@@ -5,6 +5,8 @@ import Sidebar from './Sidebar';
 import AddCategory from './Category/AddCategory';
 import AddProduct from './Product/AddProduct';
 import Allproduct from './Product/Allproduct';
+import Services from './Services/Services';
+import AdminDashBoard from './AdminDashBoard/AdminDashBoard';
 
 const Admin = () => {
   
@@ -12,6 +14,11 @@ const Admin = () => {
     const toggleDropdown = () => {
         setDropdownOpen(!dropdownOpen);
       };
+
+      const logout =()=>{
+        localStorage.clear()
+        window.location.href="/login"
+      }
   return (
 <div className="flex h-screen bg-gray-100">
       {/* Sidebar */}
@@ -37,7 +44,7 @@ const Admin = () => {
             {dropdownOpen && (
               <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2 z-50">
                 <button
-                //   onClick={logout}
+                  onClick={logout}
                   className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
                 >
                   Logout
@@ -50,10 +57,11 @@ const Admin = () => {
         {/* Main Content Area */}
         <div className="flex-1 p-6">
           <Routes>
-            <Route path="dashboard" element={<div>Dashboard</div>} />
+            <Route path="dashboard" element={<AdminDashBoard/>} />
             <Route path="category" element={<AddCategory/>} />
             <Route path="product" element={<AddProduct/>} />
             <Route path="showproduct" element={<Allproduct/>} />
+            <Route path="servicesAdd" element={<Services/>} />
          
           </Routes>
         </div>

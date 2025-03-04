@@ -1,41 +1,35 @@
 import React, { useEffect, useState } from "react";
-import NavbarForProduct from "./NavbarForProduct";
+
 import axios from "axios";
 import { Server } from "../../Server";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 
 import Footer from "../Body/Footer";
 
 import { motion } from "framer-motion";
+import NavbarForServices from "./NavbarForServices";
+import FullScreenReload from "../Loading/FullScreenReload";
+import { toast } from "react-toastify";
 
-import {Tilt} from "react-tilt"
 
-type Product = {
+
+type Services = {
   _id: string;
-  productname: string;
-  undercategory: string;
+  servicename: string;
+//   undercategory: string;
   description: string;
-  productimages: string[];
+  ServicesImages: string[];
   handlerOrder: (item: any) => void;   
 }
+const ServicesView = () => {
 
-type RelatedProduct ={
-  _id: string;
-  productname: string;
-  undercategory: string;
-  description: string;
-  productimages: string[]
+  const {id} = useParams()
 
-}
-const ProductView = () => {
-
-  const {category_id,product_id} = useParams()
-
- const [products ,setProducts] = useState<Product[]>([])
+ const [Services ,setServices] = useState<Services[]>([])
 
  const [selectedImage, setselectedImage] = useState<string | null>(null);
 
- const [productname, setProductname] = useState("");
+ const [servicename, setServicename] = useState("");
 const [name, setName] = useState("");
 const [number, setNumber] = useState("");
 const [email, setEmail] = useState("");
@@ -44,47 +38,30 @@ const [city, setCity] = useState("");
 const [pincode, setPincode] = useState("");
   const [openOrderbox, setOrderBOx] = useState(false);
   const [orersuccess, setOrderSuccess] = useState(false);
-
-  const [relatedProdut,setRelatedPro] =useState<RelatedProduct[]>([])
+  const [loading, setLoading] = useState(false);
  
-  const customOptions = {
-    reverse:true,
-    max:45,
-    perspective:1500,
-    Scale:1.2,
-    speed:2000,
-    // transition:ture,
-    axis:"X",
-    reset:false,
-    easeIn:"cubic-bezier(.2,.8,.3,1)"
+
+
+  useEffect(()=>{
+    axios.get(`${Server}/get-one-service/${id}`).then((res)=>{
+        setServices(res.data.serviceget)
+
+    })
+
+  },[id])
   
-  }
-
-
-  useEffect(()=>{
-    axios.get(`${Server}/get-One-product/${product_id}`).then((res)=>{
-      setProducts(res.data.productget)
-
-    })
-  },[product_id])
-
-  useEffect(()=>{
-    axios.get(`${Server}/get-related-product/${category_id}/${product_id}`).then((res)=>{
-      setRelatedPro(res.data.relatedProducts)
-    })
-  },[category_id,product_id])
 
   const handlerOrder = (item: any) => {
     setOrderBOx(true);
-    setProductname(item.productname);
+    setServicename(item.servicename);
 
   }
-
+console.log(servicename)
   const placeOrder =(e :React.FormEvent<HTMLFormElement>)=>{
     e.preventDefault();
-
-    axios.post(`${Server}/place-order`,{
-      productname,
+    setLoading(true)
+    axios.post(`${Server}/place-service-order`,{
+    servicename,
       name,
       number,
       email,
@@ -93,6 +70,7 @@ const [pincode, setPincode] = useState("");
       pincode
     }).then((res)=>{
       if(res.data.msg === "success" ){
+        setLoading(false)
         setOrderSuccess(true)
         setOrderBOx(false);
         setTimeout(() => {
@@ -101,29 +79,29 @@ const [pincode, setPincode] = useState("");
         }, 4000);
       }
       else{
-        alert("Something went wrong")
+        toast.error("Failed to place order")
       }
-    }),{
-  
-  
-  }
+    }).catch((error)=>{
+      toast.error("Failed to place order")
+      console.log(error)
+    })
 }
 
   return (
     <div className="flex flex-col min-h-screen bg-gray-100 -z-50 scroll-smooth">
       {/* Navbar */}
-      <NavbarForProduct />
+      <NavbarForServices />
 
       {/* Main Container */}
       <div className="container mx-auto p-6">
-      {products.map((item: any) => (
+      {Services.map((item: any) => (
         <div key={item._id} className="grid grid-cols-1 md:grid-cols-2 gap-10 bg-white p-6 rounded-lg shadow-lg">
           
           {/* Image Gallery */}
           <div className="flex">
             {/* Sidebar Images */}
             <div className="flex flex-col space-y-3">
-              {item.productimages.map((img: string, index: number) => (
+              {item.ServicesImages.map((img: string, index: number) => (
                 <img
                   key={index}
                   src={img}
@@ -136,7 +114,7 @@ const [pincode, setPincode] = useState("");
 
             {/* Main Image */}
             <div className="flex-1 flex justify-center">
-              <img className="w-full max-w-md rounded-lg object-cover" src={  selectedImage || item.productimages[0]} alt={item.productname} />
+              <img className="w-full max-w-md rounded-lg object-cover" src={  selectedImage || item.ServicesImages[0]} alt={item.servicename} />
             </div>
           </div>
 
@@ -145,7 +123,7 @@ const [pincode, setPincode] = useState("");
   {/* Product Name */}
    
   <h1 className="text-3xl font-bold text-gray-900 tracking-tight">
-    {item.productname}
+    {item.servicename}
   </h1>
 
   {/* Description with Read More Functionality */}
@@ -259,30 +237,9 @@ const [pincode, setPincode] = useState("");
         </motion.div>
       </div>
     )}
-<div className="my-8">
-  <h2 className="text-2xl font-semibold text-center mb-6">Related Products</h2>
-  
-  <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 px-4">
-    {relatedProdut.map((item: any) => (
-      <Tilt options={customOptions} 
-    
-        key={item._id} 
-        className="bg-white rounded-lg shadow-md p-4 transition-transform transform hover:scale-105"
-      >
-        <Link to={`/products/${category_id}/${item._id}`}>
-        
-        <img 
-          src={item.productimages[0]} 
-          alt={item.description} 
-          className="w-full h-40 object-cover rounded-md mb-3"
-        />
-        <h1>{item.productname}</h1>
-        <p className="text-gray-700 text-sm">{item.description}</p>
-        </Link>
-      </Tilt>
-    ))}
-  </div>
-</div>
+    {loading&&(
+        <FullScreenReload/>
+    )}
 
 
 
@@ -295,4 +252,4 @@ const [pincode, setPincode] = useState("");
   );
 };
 
-export default ProductView;
+export default ServicesView;
