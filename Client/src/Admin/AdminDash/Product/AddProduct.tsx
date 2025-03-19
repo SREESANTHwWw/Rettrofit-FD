@@ -72,6 +72,7 @@ const AddProduct = () => {
     } catch (error) {
       console.error("Error creating product:", error);
       toast.error("Failed to create product");
+      setLoading(false)
       
     }
   };

@@ -23,8 +23,7 @@ const NavbarForProduct = () => {
   const [underServiceData, setUnderServiceData] = useState([]);
   const [service, setservice] = useState<Boolean>(false);
   const navigate = useNavigate();
-  const [category_id ,setCategoty_id] = useState("")
-  const [productId,setProduct_id] =useState("")
+
   const context = useContext(FetchContext)?.categories ?? [];
 
   const serviceContext = useContext(FetchContext)?.servicesData ?? [];
@@ -66,8 +65,7 @@ const NavbarForProduct = () => {
   const handleProductClick = (item: any) => {
     const categoryId = item.undercategory; // Store in a local variable
     const productId = item._id;
-    setCategoty_id(categoryId);
-    setProduct_id(productId);
+    
   
     navigate(`/products/${categoryId}/${productId}`); // Use local variables
   };
@@ -103,7 +101,7 @@ const NavbarForProduct = () => {
         className={`${
           scolled
             ? "sm:bg-white  fixed w-full transition ease-in duration-300 rounded-b-[20px] shadow-2xl "
-            : "bg-blue-700"
+            : "bg-wh"
         }`}
       >
         <div className="hidden lg:flex w-full py-2 bg-transparent">

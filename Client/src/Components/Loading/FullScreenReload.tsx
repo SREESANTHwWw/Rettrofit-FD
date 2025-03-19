@@ -1,10 +1,11 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { motion } from "framer-motion";
 
 import {  Truck } from "lucide-react";
 
 const FullScreenReload = () => {
-  const [show, setShow] = useState(true);
+  // const [show, setShow] = useState(true);
+  const show = true
 
   useEffect(() => {
     setTimeout(() => {

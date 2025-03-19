@@ -8,9 +8,8 @@ import { MdEmail } from "react-icons/md";
 import { FetchContext } from "../Contexts/FetchContext";
 import axios from "axios";
 import { Server } from "../../Server";
-import FeaturesSection from "../Body/FeaturesSection";
-import _ from "lodash";
 
+import _ from "lodash";
 
 const NavbarForServices = () => {
   const [isMenuOpen, setIsMenuOpen] = useState<Boolean>(false);
@@ -63,12 +62,20 @@ const NavbarForServices = () => {
   const handlerservice = () => {
     setservice(true);
   };
-  const handleProductClick = (id: string) => {
-    navigate(`/products/${id}`);
-  };
+  const handleProductClick = (item: any) => {
+    const categoryId = item.undercategory; // Store in a local variable
+    const productId = item._id;
 
-  const handleServiceClick = (id: string) => {
-    navigate(`/services/${id}`);
+  
+    navigate(`/products/${categoryId}/${productId}`); // Use local variables
+  };
+  
+
+  const handleServiceClick = (item:any) => {
+    const mainService_id =(item.underService)
+    const service_id  =(item._id)
+
+    navigate(`/services/${mainService_id}/${service_id }`);
   };
 
   const handlerserviceopen = () => {
@@ -97,7 +104,7 @@ const NavbarForServices = () => {
         className={`${
           scolled
             ? "sm:bg-white bg-transparent fixed w-full transition ease-in duration-300 rounded-b-[20px] shadow-2xl "
-            : ""
+            : " shadow-2xl"
         }`}
       >
         <div className="hidden lg:flex w-full py-2 bg-transparent">
@@ -108,7 +115,7 @@ const NavbarForServices = () => {
                 src="/retro.png"
                 alt="Logo"
                 className={`${
-                  scolled ? "contrast-150" : "filter brightness-0 invert"
+                  scolled ? "contrast-150" : ""
                 } w-32 h-20 object-contain hover:scale-105 transition-transform duration-300`}
               />
             </Link>
@@ -118,7 +125,7 @@ const NavbarForServices = () => {
               className={`${
                 scolled
                   ? "text-black flex space-x-4 items-center"
-                  : "text-white flex space-x-4 items-center"
+                  : "text-black flex space-x-4 items-center"
               } `}
             >
               {/* Phone */}
@@ -215,7 +222,7 @@ const NavbarForServices = () => {
                         <li
                           key={item._id}
                           className="gap-2 text-md hover:underline-offset-8 font-medium p-2 rounded-md transition-colors duration-200 hover:underline cursor-pointer hover:decoration-teal-500"
-                          onClick={() => handleServiceClick(item._id)}
+                          onClick={() => handleServiceClick(item)}
                         >
                           {item.servicename}
                         </li>
@@ -275,7 +282,7 @@ const NavbarForServices = () => {
                         <li
                           key={item._id}
                           className="gap-2 text-md hover:underline-offset-8 font-medium p-2 rounded-md transition-colors duration-200 hover:underline cursor-pointer hover:decoration-teal-500"
-                          onClick={() => handleProductClick(item._id)}
+                          onClick={() => handleProductClick(item)}
                         >
                           {item.productname}
                         </li>
@@ -313,7 +320,7 @@ const NavbarForServices = () => {
                 >
                   <IoSearch
                     className={`text-2xl ${
-                      scolled ? "text-black" : "text-white"
+                      scolled ? "text-black" : "text-black"
                     }  hover:text-emerald-400`}
                   />
                 </button>
@@ -448,8 +455,8 @@ const NavbarForServices = () => {
         </nav>
       </div>
 
-      {/* Hero Section */}
    
+     
     </div>
   );
 };

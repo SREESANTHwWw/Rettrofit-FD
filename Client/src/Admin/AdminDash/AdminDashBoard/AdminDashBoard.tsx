@@ -183,10 +183,7 @@ const AdminDashBoard = () => {
                  <td className="p-2">{order.servicename}</td>
                     </tr>
               ))  
-
             }
-
-           
           </tbody>
         </table>
       </div>

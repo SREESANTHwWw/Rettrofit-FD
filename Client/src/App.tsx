@@ -12,6 +12,9 @@ import ProtectedRoute from './Components/ProtectRout';
 import LoginRedirect from './Components/LoginRedirect';
 import AdminDashBoard from './Admin/AdminDash/AdminDashBoard/AdminDashBoard';
 
+import Faq from './Pages/Faq';
+import Aboutus from './Pages/Aboutus';
+
 // Lazy loaded components
 const FetchContextProvider = lazy(() => import("./Components/Contexts/FetchContext"));
 
@@ -25,7 +28,9 @@ const App = () => {
             <Route path='/contactus' element={<ContactForm />} />
             <Route path='/login' element={<LoginRedirect/>} />
             <Route path='/products/:category_id/:product_id' element={<ProductView />} />
-            <Route path='/services/:id' element={<ServicesView />} />
+            <Route path='/services/:mainService_id/:service_id' element={<ServicesView />} />
+            <Route path="/faq" element={<Faq />} />
+            <Route path="/about" element={<Aboutus />} />
 
             {/* Protected Admin Route */}
             <Route path='/admin/*' element={
@@ -34,7 +39,9 @@ const App = () => {
               </ProtectedRoute>
             }>
               <Route path="dashboard" element={<AdminDashBoard/>} />
+          
             </Route>
+     
           </Routes>
         </FetchContextProvider>
       </BrowserRouter>

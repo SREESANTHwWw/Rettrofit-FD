@@ -9,7 +9,7 @@ export const FeaturesSection2 = () => {
         {/* Image Section */}
         <div className="lg:w-1/2 w-full">
           <img
-            src="/about_banner.avif"
+            src="/about_banner.webp"
             alt="Background"
              loading="lazy"
             className="w-full h-full object-cover rounded-2xl shadow-2xl"

@@ -23,8 +23,7 @@ const NavBar1 = () => {
   const [underServiceData, setUnderServiceData] = useState([]);
   const [service, setservice] = useState<Boolean>(false);
   const navigate = useNavigate();
-  const [category_id ,setCategoty_id] = useState("")
-  const [productId,setProduct_id] =useState("")
+
   const context = useContext(FetchContext)?.categories ?? [];
 
   const serviceContext = useContext(FetchContext)?.servicesData ?? [];
@@ -66,15 +65,17 @@ const NavBar1 = () => {
   const handleProductClick = (item: any) => {
     const categoryId = item.undercategory; // Store in a local variable
     const productId = item._id;
-    setCategoty_id(categoryId);
-    setProduct_id(productId);
+
   
     navigate(`/products/${categoryId}/${productId}`); // Use local variables
   };
   
 
-  const handleServiceClick = (id: string) => {
-    navigate(`/services/${id}`);
+  const handleServiceClick = (item:any) => {
+    const mainService_id =(item.underService)
+    const service_id  =(item._id)
+
+    navigate(`/services/${mainService_id}/${service_id }`);
   };
 
   const handlerserviceopen = () => {
@@ -221,7 +222,7 @@ const NavBar1 = () => {
                         <li
                           key={item._id}
                           className="gap-2 text-md hover:underline-offset-8 font-medium p-2 rounded-md transition-colors duration-200 hover:underline cursor-pointer hover:decoration-teal-500"
-                          onClick={() => handleServiceClick(item._id)}
+                          onClick={() => handleServiceClick(item)}
                         >
                           {item.servicename}
                         </li>

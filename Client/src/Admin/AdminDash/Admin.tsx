@@ -3,10 +3,13 @@ import { Route, Routes } from 'react-router-dom'
 import { UserCircleIcon, ChevronDownIcon } from "@heroicons/react/24/solid";
 import Sidebar from './Sidebar';
 import AddCategory from './Category/AddCategory';
-import AddProduct from './Product/AddProduct';
+
 import Allproduct from './Product/Allproduct';
 import Services from './Services/Services';
 import AdminDashBoard from './AdminDashBoard/AdminDashBoard';
+import Subcategory from './Category/Subcategory';
+import ProductCreater from './Category/ProductCreater';
+import SubServices from './Services/SubService';
 
 const Admin = () => {
   
@@ -59,9 +62,12 @@ const Admin = () => {
           <Routes>
             <Route path="dashboard" element={<AdminDashBoard/>} />
             <Route path="category" element={<AddCategory/>} />
-            <Route path="product" element={<AddProduct/>} />
+            {/* <Route path="product" element={<Allproductt/>} /> */}
             <Route path="showproduct" element={<Allproduct/>} />
             <Route path="servicesAdd" element={<Services/>} />
+            <Route path="subservice/:id" element={<SubServices/>} />
+            <Route path ="subcategory/:id" element={<Subcategory/>} />
+            <Route path ="addProduct/:id"   element={<ProductCreater/>} />
          
           </Routes>
         </div>
